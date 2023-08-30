@@ -2,6 +2,7 @@ package model.dao;
 
 import db.DB;
 import model.dao.impl.PessoaDaoJDBC;
+import model.dao.impl.PessoaServiçoDaoJDBC;
 
 
 public class DaoFactory {

@@ -10,4 +10,5 @@ public interface PessoaServiçoDao {
 	void deleteById(PessoaServiço obj);
 	PessoaServiço FindById(Integer id);
 	List<PessoaServiço> findAll();
+	List<PessoaServiço> findBYbloco();
 }

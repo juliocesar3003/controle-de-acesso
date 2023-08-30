@@ -1,21 +1,24 @@
 package model.entities;
 
-import java.time.LocalDateTime;
+
+
+import java.time.LocalTime;
 import java.util.Objects;
 
 
 public class PessoaServiço extends Pessoa {
 
-	private LocalDateTime HoraEntrada;
-	private LocalDateTime HoraSaida;
+	private LocalTime HoraEntrada;
+	private LocalTime HoraSaida;
 	private String NomeEmpresa;
 	private String NomeContratante;
 	private String TipoTrabalho;
 	
 	
-
-	public PessoaServiço(Integer Id, String name, Integer cpf, Integer napartament, String nblock, LocalDateTime horaEntrada,
-			LocalDateTime horaSaida, String nomeEmpresa, String nomeContratante, String tipoTrabalho, Boolean Estado) {
+	public PessoaServiço() {}
+	
+	public PessoaServiço(Integer Id, String name, Integer cpf, Integer napartament, String nblock, LocalTime horaEntrada,
+			LocalTime horaSaida, String nomeEmpresa, String nomeContratante, String tipoTrabalho, Boolean Estado) {
 		super(Id, name, cpf, napartament, nblock, Estado );
 		HoraEntrada = horaEntrada;
 		HoraSaida = horaSaida;
@@ -24,19 +27,19 @@ public class PessoaServiço extends Pessoa {
 		TipoTrabalho = tipoTrabalho;
 	}
 
-	public LocalDateTime getHoraEntrada() {
+	public LocalTime getHoraEntrada() {
 		return HoraEntrada;
 	}
 
-	public void setHoraEntrada(LocalDateTime horaEntrada) {
+	public void setHoraEntrada(LocalTime horaEntrada) {
 		HoraEntrada = horaEntrada;
 	}
 
-	public LocalDateTime getHoraSaida() {
+	public LocalTime getHoraSaida() {
 		return HoraSaida;
 	}
 
-	public void setHoraSaida(LocalDateTime horaSaida) {
+	public void setHoraSaida(LocalTime horaSaida) {
 		HoraSaida = horaSaida;
 	}
 
