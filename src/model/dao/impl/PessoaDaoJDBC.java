@@ -12,13 +12,30 @@ import db.DbException;
 import model.dao.PessoaDao;
 import model.entities.Pessoa;
 
+
 public class PessoaDaoJDBC implements PessoaDao{
 
 	private Connection connect;
 	
+	
+	
 	public PessoaDaoJDBC(Connection connect) {
 		this.connect = connect;
 	}
+	
+	private Pessoa instaciarPessoa(ResultSet rs) throws SQLException{
+		Pessoa obj = new Pessoa();
+		
+		obj.setId(rs.getInt("Id"));
+		obj.setName(rs.getString("Nome"));
+		obj.setCpf(rs.getInt("Cpf"));
+		obj.setNapartament(rs.getInt("Apartamento"));
+		obj.setNblock(rs.getString("bloco"));
+		
+		return obj;
+		
+	}
+	
 	
 	@Override
 	public void insert(Pessoa obj) {
@@ -106,7 +123,70 @@ public class PessoaDaoJDBC implements PessoaDao{
 		}
 		
 	}
-
+	
+	@Override
+	public void EntradaId(Pessoa obj, Integer id) {
+		
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		
+		
+		
+	 try {
+		 	st = connect.prepareStatement( "UPDATE morador Set Estado = ? WHERE Id = ?");
+				
+		 	st.setBoolean(1,true);
+			st.setInt(2,id);
+		 	st.executeUpdate();
+			
+		
+			
+		
+		
+	}
+	 
+	 catch(SQLException e) {
+		throw new DbException(e.getMessage());
+	}
+	
+	 finally {
+		DB.closeStatement(st);
+		DB.closeResultSet(rs);
+	 	}
+		
+	}
+	
+	@Override
+	public void SaidaId(Pessoa obj, Integer id) {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		
+		
+		
+	 try {
+		 	st = connect.prepareStatement( "UPDATE morador Set Estado = ? WHERE Id = ?");
+				
+		 	st.setBoolean(1,false);
+			st.setInt(2,id);
+		 	st.executeUpdate();
+			
+		
+			
+		
+		
+	}
+	 
+	 catch(SQLException e) {
+		throw new DbException(e.getMessage());
+	}
+	
+	 finally {
+		DB.closeStatement(st);
+		DB.closeResultSet(rs);
+	 	}
+		
+	}
+	
 	@Override
 	public Pessoa FindById(Integer id) {
 		PreparedStatement st = null;
@@ -216,7 +296,15 @@ public class PessoaDaoJDBC implements PessoaDao{
 			DB.closeResultSet(rs);
 		}
 		
-	}	
+	}
+
+	
+		
+	
+	
+	
+
+	
 	
 
 }
