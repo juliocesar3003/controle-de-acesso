@@ -2,6 +2,7 @@ package model.entities;
 
 
 
+
 import java.time.LocalTime;
 import java.util.Objects;
 
@@ -31,8 +32,8 @@ public class PessoaServiço extends Pessoa {
 		return HoraEntrada;
 	}
 
-	public void setHoraEntrada(LocalTime horaEntrada) {
-		HoraEntrada = horaEntrada;
+	public void setHoraEntrada(LocalTime time) {
+		HoraEntrada = time;
 	}
 
 	public LocalTime getHoraSaida() {
