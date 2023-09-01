@@ -11,7 +11,6 @@ import java.util.List;
 import db.DB;
 import db.DbException;
 import model.dao.PessoaServiçoDao;
-import model.entities.Pessoa;
 import model.entities.PessoaServiço;
 
 
@@ -22,6 +21,28 @@ public class PessoaServiçoDaoJDBC implements PessoaServiçoDao{
 	public PessoaServiçoDaoJDBC(Connection connect) {
 		this.connect = connect;
 	}
+	
+	private PessoaServiço instaciarPessoaServ(ResultSet rs) throws SQLException{
+		PessoaServiço obj = new PessoaServiço();
+		
+		obj.setId(rs.getInt("Id"));
+		obj.setName(rs.getString("Nome"));
+		obj.setCpf(rs.getInt("Cpf"));
+		obj.setNapartament(rs.getInt("Apartamento"));
+		obj.setNblock(rs.getString("bloco"));
+		obj.setHoraEntrada(rs.getTime("HoraEntrada").toLocalTime());
+		obj.setHoraSaida(rs.getTime("HoraSaida").toLocalTime());
+		obj.setNomeEmpresa(rs.getString("NomeEmpresa"));
+		obj.setNomeContratante(rs.getString("NomeContratante"));
+		obj.setTipoTrabalho(rs.getString("TipoTrabalho"));
+		obj.setEstado(rs.getBoolean("Estado"));
+		
+		return obj;
+		
+	}
+	
+	
+	
 	@Override
 	public void insert(PessoaServiço obj) {
 		
@@ -121,7 +142,70 @@ public class PessoaServiçoDaoJDBC implements PessoaServiçoDao{
 		}
 		
 	}
+	
+	@Override
+	public void EntradaId(PessoaServiço obj, Integer id) {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		
+		
+		
+	 try {
+		 	st = connect.prepareStatement( "UPDATE pessoaServiço Set Estado = ? WHERE Id = ?");
+				
+		 	st.setBoolean(1,true);
+			st.setInt(2,id);
+		 	st.executeUpdate();
+			
+		
+			
+		
+		
+	}
+	 
+	 catch(SQLException e) {
+		throw new DbException(e.getMessage());
+	}
+	
+	 finally {
+		DB.closeStatement(st);
+		DB.closeResultSet(rs);
+	 	}
+		
+		
+	}
 
+	@Override
+	public void SaidaId(PessoaServiço obj, Integer id) {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		
+		
+		
+	 try {
+		 	st = connect.prepareStatement( "UPDATE pessoaServiço Set Estado = ? WHERE Id = ?");
+				
+		 	st.setBoolean(1,false);
+			st.setInt(2,id);
+		 	st.executeUpdate();
+			
+		
+			
+		
+		
+	}
+	 
+	 catch(SQLException e) {
+		throw new DbException(e.getMessage());
+	}
+	
+	 finally {
+		DB.closeStatement(st);
+		DB.closeResultSet(rs);
+	 	}
+		
+	}
+	
 	@Override
 	public PessoaServiço FindById(Integer id) {
 		
@@ -225,24 +309,11 @@ public class PessoaServiçoDaoJDBC implements PessoaServiçoDao{
 		}
 		
 	}
+
 	
-	private PessoaServiço instaciarPessoaServ(ResultSet rs) throws SQLException{
-		PessoaServiço obj = new PessoaServiço();
-		
-		obj.setId(rs.getInt("Id"));
-		obj.setName(rs.getString("Nome"));
-		obj.setCpf(rs.getInt("Cpf"));
-		obj.setNapartament(rs.getInt("Apartamento"));
-		obj.setNblock(rs.getString("bloco"));
-		obj.setHoraEntrada(rs.getTime("HoraEntrada").toLocalTime());
-		obj.setHoraSaida(rs.getTime("HoraSaida").toLocalTime());
-		obj.setNomeEmpresa(rs.getString("NomeEmpresa"));
-		obj.setNomeContratante(rs.getString("NomeContratante"));
-		obj.setTipoTrabalho(rs.getString("TipoTrabalho"));
-		obj.setEstado(rs.getBoolean("Estado"));
-		
-		return obj;
-		
-	}
+
+	
+	
+	
 
 }
