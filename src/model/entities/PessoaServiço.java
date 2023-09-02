@@ -3,6 +3,8 @@ package model.entities;
 
 
 
+
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Objects;
 
@@ -11,8 +13,8 @@ import model.entities.Enum.TipoDataServiço;
 
 public class PessoaServiço extends Pessoa {
 
-	private LocalTime HoraEntrada;
-	private LocalTime HoraSaida;
+	private LocalDateTime HoraEntrada;
+	private LocalDateTime HoraSaida;
 	private String NomeEmpresa;
 	private String NomeContratante;
 	private String TipoTrabalho;
@@ -22,8 +24,8 @@ public class PessoaServiço extends Pessoa {
 	
 	public PessoaServiço() {}
 	
-	public PessoaServiço(Integer Id, String name, Integer cpf, Integer napartament, String nblock, LocalTime horaEntrada,
-						LocalTime horaSaida, String nomeEmpresa, String nomeContratante, 
+	public PessoaServiço(Integer Id, String name, Integer cpf, Integer napartament, String nblock, LocalDateTime horaEntrada,
+						LocalDateTime horaSaida, String nomeEmpresa, String nomeContratante, 
 						String tipoTrabalho,TipoDataServiço DataServiço, Boolean Estado) {
 		super(Id, name, cpf, napartament, nblock, Estado );
 		HoraEntrada = horaEntrada;
@@ -34,19 +36,19 @@ public class PessoaServiço extends Pessoa {
 		this.DataServiço = DataServiço;  
 	}
 
-	public LocalTime getHoraEntrada() {
+	public LocalDateTime getHoraEntrada() {
 		return HoraEntrada;
 	}
 
-	public void setHoraEntrada(LocalTime time) {
+	public void setHoraEntrada(LocalDateTime time) {
 		HoraEntrada = time;
 	}
 
-	public LocalTime getHoraSaida() {
+	public LocalDateTime getHoraSaida() {
 		return HoraSaida;
 	}
 
-	public void setHoraSaida(LocalTime horaSaida) {
+	public void setHoraSaida(LocalDateTime horaSaida) {
 		HoraSaida = horaSaida;
 	}
 
@@ -88,7 +90,8 @@ public class PessoaServiço extends Pessoa {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + Objects.hash(HoraEntrada, HoraSaida, NomeContratante, NomeEmpresa, TipoTrabalho);
+		result = prime * result
+				+ Objects.hash(DataServiço, HoraEntrada, HoraSaida, NomeContratante, NomeEmpresa, TipoTrabalho);
 		return result;
 	}
 
@@ -101,16 +104,20 @@ public class PessoaServiço extends Pessoa {
 		if (getClass() != obj.getClass())
 			return false;
 		PessoaServiço other = (PessoaServiço) obj;
-		return Objects.equals(HoraEntrada, other.HoraEntrada) && Objects.equals(HoraSaida, other.HoraSaida)
-				&& Objects.equals(NomeContratante, other.NomeContratante)
+		return DataServiço == other.DataServiço && Objects.equals(HoraEntrada, other.HoraEntrada)
+				&& Objects.equals(HoraSaida, other.HoraSaida) && Objects.equals(NomeContratante, other.NomeContratante)
 				&& Objects.equals(NomeEmpresa, other.NomeEmpresa) && Objects.equals(TipoTrabalho, other.TipoTrabalho);
 	}
 
 	@Override
 	public String toString() {
-		return "PersonWork [HoraEntrada=" + HoraEntrada + ", HoraSaida=" + HoraSaida + ", NomeEmpresa=" + NomeEmpresa
-				+ ", NomeContratante=" + NomeContratante + ", TipoTrabalho=" + TipoTrabalho + "]";
+		return "PessoaServiço [HoraEntrada=" + HoraEntrada + ", HoraSaida=" + HoraSaida + ", NomeEmpresa=" + NomeEmpresa
+				+ ", NomeContratante=" + NomeContratante + ", TipoTrabalho=" + TipoTrabalho + ", DataServiço="
+				+ DataServiço + "]";
 	}
+
+	
+	
 	
 	
 	

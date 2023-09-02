@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import db.DB;
 import db.DbException;
 import model.dao.PessoaServiçoDao;
 import model.entities.PessoaServiço;
+import model.entities.Enum.TipoDataServiço;
 
 
 public class PessoaServiçoDaoJDBC implements PessoaServiçoDao{
@@ -30,12 +32,13 @@ public class PessoaServiçoDaoJDBC implements PessoaServiçoDao{
 		obj.setCpf(rs.getInt("Cpf"));
 		obj.setNapartament(rs.getInt("Apartamento"));
 		obj.setNblock(rs.getString("bloco"));
-		obj.setHoraEntrada(rs.getTime("HoraEntrada").toLocalTime());
-		obj.setHoraSaida(rs.getTime("HoraSaida").toLocalTime());
+		obj.setHoraEntrada(rs.getTimestamp("HoraEntrada").toLocalDateTime());
+		obj.setHoraSaida(rs.getTimestamp("HoraSaida").toLocalDateTime());
 		obj.setNomeEmpresa(rs.getString("NomeEmpresa"));
 		obj.setNomeContratante(rs.getString("NomeContratante"));
 		obj.setTipoTrabalho(rs.getString("TipoTrabalho"));
 		obj.setEstado(rs.getBoolean("Estado"));
+		obj.setDataServiço(TipoDataServiço.valueOf(rs.getString("TipoDataServiço")));
 		
 		return obj;
 		
@@ -51,19 +54,20 @@ public class PessoaServiçoDaoJDBC implements PessoaServiçoDao{
 		try {
 			st = connect.prepareStatement(
 					"INSERT INTO pessoaServiço "
-					+"(Nome, Cpf, Apartamento, bloco, HoraEntrada, HoraSaida, NomeEmpresa,TipoTrabalho) "
+					+"(Nome, Cpf, Apartamento, bloco, HoraEntrada, HoraSaida, NomeEmpresa,TipoTrabalho,TipoDataServiço) "
 					+"VALUES "
-					+"(?, ?, ?, ?, ?, ?, ?, ?)",Statement.RETURN_GENERATED_KEYS);
+					+"(?, ?, ?, ?, ?, ?, ?, ?, ?)",Statement.RETURN_GENERATED_KEYS);
 			
 			st.setString(1, obj.getName());
 			st.setInt(2, obj.getCpf());
 			st.setInt(3, obj.getNapartament());
 			st.setString(4,obj.getNblock());
-			st.setTime(5, new java.sql.Time(obj.getHoraEntrada().getHour()));
-			st.setTime(6, new java.sql.Time(obj.getHoraSaida().getHour()));
+			st.setTimestamp(5, Timestamp.valueOf(obj.getHoraEntrada()));
+			st.setTimestamp(5, Timestamp.valueOf(obj.getHoraSaida()));
 			st.setString(7, obj.getNomeEmpresa());
 			st.setString(7, obj.getTipoTrabalho());
 			st.setString(8, obj.getTipoTrabalho()); 
+			st.setString(0, obj.getDataServiço().toString());
 		    
 		    int rowsAffected = st.executeUpdate();
 		    
@@ -97,18 +101,20 @@ public class PessoaServiçoDaoJDBC implements PessoaServiçoDao{
 		try {
 			st = connect.prepareStatement(
 					"UPDATE pessoaServiço "
-					+"SET Nome = ?, Cpf = ?, Apartamento = ?, bloco = ?, HoraEntrada = ?, HoraSaida = ?, NomeEmpresa = ?,TipoTrabalho = ? "
+					+"SET Nome = ?, Cpf = ?, Apartamento = ?, bloco = ?, HoraEntrada = ?, "
+					+ "HoraSaida = ?, NomeEmpresa = ?, TipoTrabalho = ?, TipoDataServiço = ? "
 					+"WHERE Id = ?");
 			
 			st.setString(1, obj.getName());
 			st.setInt(2, obj.getCpf());
 			st.setInt(3, obj.getNapartament());
 			st.setString(4,obj.getNblock());
-			st.setTime(5, new java.sql.Time(obj.getHoraEntrada().getHour()));
-			st.setTime(6, new java.sql.Time(obj.getHoraSaida().getHour()));
+			st.setTimestamp(5, Timestamp.valueOf(obj.getHoraEntrada()));
+			st.setTimestamp(5, Timestamp.valueOf(obj.getHoraSaida()));
 			st.setString(7, obj.getNomeEmpresa());
 			st.setString(7, obj.getTipoTrabalho());
 			st.setString(8, obj.getTipoTrabalho()); 
+			st.setString(0, obj.getDataServiço().toString());	
 			
 		    
 		    st.executeUpdate();
