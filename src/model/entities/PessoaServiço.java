@@ -6,6 +6,8 @@ package model.entities;
 import java.time.LocalTime;
 import java.util.Objects;
 
+import model.entities.Enum.TipoDataServiço;
+
 
 public class PessoaServiço extends Pessoa {
 
@@ -15,17 +17,21 @@ public class PessoaServiço extends Pessoa {
 	private String NomeContratante;
 	private String TipoTrabalho;
 	
+	private TipoDataServiço DataServiço; // RETORNA UM ENUM MOSTRANDO SE O SERVIÇO VAI SER HORA/DIA/FIXA
+	
 	
 	public PessoaServiço() {}
 	
 	public PessoaServiço(Integer Id, String name, Integer cpf, Integer napartament, String nblock, LocalTime horaEntrada,
-			LocalTime horaSaida, String nomeEmpresa, String nomeContratante, String tipoTrabalho, Boolean Estado) {
+						LocalTime horaSaida, String nomeEmpresa, String nomeContratante, 
+						String tipoTrabalho,TipoDataServiço DataServiço, Boolean Estado) {
 		super(Id, name, cpf, napartament, nblock, Estado );
 		HoraEntrada = horaEntrada;
 		HoraSaida = horaSaida;
 		NomeEmpresa = nomeEmpresa;
 		NomeContratante = nomeContratante;
 		TipoTrabalho = tipoTrabalho;
+		this.DataServiço = DataServiço;  
 	}
 
 	public LocalTime getHoraEntrada() {
@@ -66,6 +72,16 @@ public class PessoaServiço extends Pessoa {
 
 	public void setTipoTrabalho(String tipoTrabalho) {
 		TipoTrabalho = tipoTrabalho;
+	}
+	
+	
+
+	public TipoDataServiço getDataServiço() {
+		return DataServiço;
+	}
+
+	public void setDataServiço(TipoDataServiço dataServiço) {
+		DataServiço = dataServiço;
 	}
 
 	@Override
